@@ -1,9 +1,12 @@
 """
-Face detection and alignment using MTCNN (facenet-pytorch).
+Face detection and alignment using SCRFD (via InsightFace 0.7.3).
 
-Detects faces, extracts 5-point landmarks, and aligns to 112×112
+Uses InsightFace's FaceAnalysis with the 'buffalo_l' model pack which
+includes the SCRFD-10GF detector — a state-of-the-art anchor-free face
+detector that is significantly faster and more accurate than MTCNN.
+
+Detects faces, extracts 5-point landmarks (kps), and aligns to 112×112
 using the standard ArcFace/AdaFace similarity transform.
-MTCNN is a cascade of P-Net, R-Net, O-Net — robust multi-task face detector.
 """
 
 import cv2
@@ -11,7 +14,6 @@ import numpy as np
 from PIL import Image
 from typing import Optional
 import logging
-import torch
 
 logger = logging.getLogger(__name__)
 
@@ -40,22 +42,25 @@ def _align_face(img_bgr: np.ndarray, landmarks: np.ndarray, target_size: int = 1
 
 
 class FaceDetector:
-    """MTCNN-based face detector with ArcFace/AdaFace alignment."""
+    """SCRFD-based face detector (via InsightFace) with ArcFace/AdaFace alignment."""
 
     def __init__(self):
-        self._mtcnn = None
+        self._app = None
 
     def _ensure_loaded(self) -> None:
-        if self._mtcnn is None:
-            from facenet_pytorch import MTCNN
-            self._mtcnn = MTCNN(
-                keep_all=True,
-                device=torch.device("cpu"),
-                select_largest=False,
-                min_face_size=40,
-                thresholds=[0.6, 0.7, 0.7],
+        if self._app is None:
+            from insightface.app import FaceAnalysis
+
+            # Only load detection module — skip recognition to save memory
+            self._app = FaceAnalysis(
+                name="buffalo_l",
+                allowed_modules=["detection"],
+                providers=["CPUExecutionProvider"],
             )
-            logger.info("MTCNN face detector loaded.")
+            # det_size controls the input resolution for the detector
+            # 640×640 is the default and provides excellent accuracy
+            self._app.prepare(ctx_id=-1, det_size=(640, 640))
+            logger.info("InsightFace SCRFD face detector loaded (buffalo_l, CPU).")
 
     def detect_and_align(
         self, image: Image.Image, target_size: int = 112
@@ -73,20 +78,22 @@ class FaceDetector:
         img_np_rgb = np.array(img_rgb)
         img_bgr = cv2.cvtColor(img_np_rgb, cv2.COLOR_RGB2BGR)
 
-        # Detect faces — returns boxes (N,4), probs (N,), landmarks (N,5,2)
-        boxes, probs, landmarks = self._mtcnn.detect(img_rgb, landmarks=True)
+        # Detect faces — returns list of Face objects
+        faces = self._app.get(img_bgr)
 
-        if boxes is None or len(boxes) == 0:
+        if not faces:
             return None, None
 
-        # Select the largest face by area
-        areas = (boxes[:, 2] - boxes[:, 0]) * (boxes[:, 3] - boxes[:, 1])
-        best_idx = int(np.argmax(areas))
+        # Select the largest face by bounding box area
+        best_face = max(
+            faces,
+            key=lambda f: (f.bbox[2] - f.bbox[0]) * (f.bbox[3] - f.bbox[1]),
+        )
 
-        bbox = boxes[best_idx].tolist()  # [x1, y1, x2, y2]
+        bbox = best_face.bbox.tolist()  # [x1, y1, x2, y2]
 
         # 5-point landmarks: left_eye, right_eye, nose, mouth_left, mouth_right
-        lm = landmarks[best_idx]  # shape (5, 2)
+        lm = best_face.kps  # shape (5, 2)
 
         # Align face using similarity transform
         aligned = _align_face(img_bgr, lm, target_size)
@@ -97,9 +104,15 @@ class FaceDetector:
         """Just get the bounding box of the largest face."""
         self._ensure_loaded()
         img_rgb = image.convert("RGB")
-        boxes, _, _ = self._mtcnn.detect(img_rgb, landmarks=True)
-        if boxes is None or len(boxes) == 0:
+        img_np_rgb = np.array(img_rgb)
+        img_bgr = cv2.cvtColor(img_np_rgb, cv2.COLOR_RGB2BGR)
+
+        faces = self._app.get(img_bgr)
+        if not faces:
             return None
-        areas = (boxes[:, 2] - boxes[:, 0]) * (boxes[:, 3] - boxes[:, 1])
-        best_idx = int(np.argmax(areas))
-        return boxes[best_idx].tolist()
+
+        best_face = max(
+            faces,
+            key=lambda f: (f.bbox[2] - f.bbox[0]) * (f.bbox[3] - f.bbox[1]),
+        )
+        return best_face.bbox.tolist()
