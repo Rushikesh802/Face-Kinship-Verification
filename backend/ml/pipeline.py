@@ -2,7 +2,7 @@
 KinshipPipeline — End-to-end kinship verification.
 
 Orchestrates:
-  1. RetinaFace (via InsightFace) → detect & align faces to 112×112
+  1. SCRFD (via InsightFace) → detect & align faces to 112×112
   2. AdaFace IR-101 backbone → extract 512-d L2-normalized embeddings
   3. KinshipHead → predict kinship probability
 """
@@ -119,7 +119,7 @@ class KinshipPipeline:
         if self.is_loaded:
             return
 
-        # 1. Face detector (RetinaFace via InsightFace)
+        # 1. Face detector (SCRFD via InsightFace)
         logger.info("Loading face detector...")
         self._detector = FaceDetector()
 

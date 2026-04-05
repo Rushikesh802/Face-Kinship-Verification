@@ -47,7 +47,7 @@ export default function Footer() {
               <li>AdaFace IR-101</li>
               <li>Siamese Neural Network</li>
               <li>PyTorch & FastAPI</li>
-              <li>MTCNN Face Detection</li>
+              <li>SCRFD Face Detection</li>
             </ul>
           </div>
         </div>

@@ -1,6 +1,6 @@
 # KinVerify — Face Kinship Verification
 
-AI-powered facial kinship verification using **AdaFace IR-101**, **RetinaFace**, and a custom **Siamese neural network**.
+AI-powered facial kinship verification using **AdaFace IR-101**, **SCRFD (InsightFace)**, and a custom **Siamese neural network**.
 
 ## Quick Start
 
@@ -31,7 +31,7 @@ The frontend proxies `/api/*` requests to the backend at `localhost:8000`.
 ## Architecture
 
 ```
-Input Images → RetinaFace Detection → 112×112 Alignment
+Input Images → SCRFD Detection → 112×112 Alignment
 → AdaFace IR-101 → 512-d Embeddings → Siamese Fusion Head
 → Kinship Probability (threshold: 0.5187)
 ```

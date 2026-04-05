@@ -24,7 +24,7 @@ export default function Home() {
               <div className="flex justify-center lg:justify-start">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full clay-badge animate-pulse-clay">
                   <Zap size={16} className="text-yellow-400" />
-                  <span>Powered by AdaFace & MTCNN</span>
+                  <span>Powered by AdaFace & SCRFD</span>
                 </div>
               </div>
 

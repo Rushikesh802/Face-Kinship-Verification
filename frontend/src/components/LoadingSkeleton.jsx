@@ -10,7 +10,7 @@ export default function LoadingSkeleton() {
       {/* Progress steps */}
       <div className="space-y-4 max-w-sm mx-auto">
         {[
-          'Detecting faces with MTCNN...',
+          'Detecting faces with SCRFD...',
           'Aligning to 112×112...',
           'Extracting AdaFace embeddings...',
           'Computing kinship probability...',

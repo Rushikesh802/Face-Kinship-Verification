@@ -10,9 +10,9 @@ const techStack = [
   },
   {
     icon: <Target size={24} />,
-    name: 'MTCNN',
+    name: 'SCRFD',
     role: 'Face Detection',
-    desc: 'Multi-task Cascaded CNN with 5-point landmark alignment. Ensures 112×112 standardized face crops.',
+    desc: 'InsightFace SCRFD anchor-free detector with 5-point landmark alignment. Ensures 112×112 standardized face crops.',
     iconClass: 'clay-icon-purple',
   },
   {
@@ -89,7 +89,7 @@ export default function About() {
             <div className="flex flex-col md:flex-row items-center justify-center gap-3 text-sm">
               {[
                 { label: 'Input Image', bg: 'bg-slate-600' },
-                { label: 'MTCNN', bg: 'bg-clay-danger' },
+                { label: 'SCRFD', bg: 'bg-clay-danger' },
                 { label: 'Align 112×112', bg: 'bg-clay-warning' },
                 { label: 'AdaFace IR-101', bg: 'bg-clay-purple' },
                 { label: '512-d Embedding', bg: 'bg-clay-blue' },
