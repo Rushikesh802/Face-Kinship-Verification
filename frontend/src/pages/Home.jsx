@@ -145,7 +145,7 @@ export default function Home() {
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-text-primary font-[family-name:var(--font-family-heading)]">
-              What is <span className="gradient-text">Face Kinship Verification</span>?
+              What is <span className="gradient-text">kinVision</span>?
             </h2>
             <p className="max-w-2xl mx-auto text-text-secondary">
               An AI-based system that analyzes facial similarities between two individuals

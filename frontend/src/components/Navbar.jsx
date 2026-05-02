@@ -19,11 +19,9 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="clay-icon-purple w-10 h-10 flex items-center justify-center rounded-lg group-hover:scale-110 transition-transform">
-              <Users size={20} className="text-white" />
-            </div>
+            <img src="/logo.png" alt="kinVision Logo" className="w-10 h-10 object-cover rounded-lg group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(168,85,247,0.4)]" />
             <h1 className="text-xl font-bold text-text-primary font-[family-name:var(--font-family-heading)]">
-              Face <span className="gradient-text">Kinship</span>
+              kin<span className="gradient-text">Vision</span>
             </h1>
           </Link>
 

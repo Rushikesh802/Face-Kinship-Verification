@@ -55,7 +55,7 @@ export default function Analyze() {
       <section className="py-12 px-4">
         <div className="container mx-auto max-w-6xl text-center mb-12 fade-in">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 text-text-primary font-[family-name:var(--font-family-heading)]">
-            The Kinship <span className="gradient-text">Lab</span>
+            kinVision <span className="gradient-text">Lab</span>
           </h1>
           <p className="max-w-2xl mx-auto text-text-secondary">
             Upload two face images to analyze their kinship relationship. Our

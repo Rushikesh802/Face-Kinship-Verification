@@ -10,11 +10,9 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <div className="clay-icon-purple w-10 h-10 flex items-center justify-center rounded-lg">
-                <Users size={22} className="text-white" />
-              </div>
+              <img src="/logo.png" alt="kinVision Logo" className="w-10 h-10 object-cover rounded-lg shadow-[0_0_15px_rgba(168,85,247,0.4)]" />
               <h2 className="text-2xl font-bold text-text-primary font-[family-name:var(--font-family-heading)]">
-                Face <span className="gradient-text">Kinship</span>
+                kin<span className="gradient-text">Vision</span>
               </h2>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-text-secondary">
@@ -61,7 +59,7 @@ export default function Footer() {
             Built with <Heart size={14} className="text-clay-danger" /> using PyTorch & React
           </p>
           <p className="text-sm text-text-muted">
-            © {new Date().getFullYear()} Face Kinship — All rights reserved
+            © {new Date().getFullYear()} kinVision — All rights reserved
           </p>
         </div>
       </div>

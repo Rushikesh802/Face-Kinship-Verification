@@ -152,7 +152,7 @@ export default function Contact() {
                 <Mail size={20} className="text-white" />
               </div>
               <h3 className="text-text-primary font-semibold mb-1">Email</h3>
-              <p className="text-text-secondary text-sm">contact@kinverify.ai</p>
+              <p className="text-text-secondary text-sm">contact@kinvision.ai</p>
             </div>
             <div className="neu-container p-6 text-center">
               <div className="clay-icon-purple !w-12 !h-12 !rounded-full mx-auto mb-3">
@@ -173,7 +173,7 @@ export default function Contact() {
                 </h2>
               </div>
               <p className="text-text-secondary text-base">
-                Meet the minds behind our Face Kinship Verification technology.
+                Meet the minds behind our kinVision technology.
               </p>
             </div>
             

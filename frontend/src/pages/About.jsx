@@ -60,7 +60,7 @@ export default function About() {
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16 fade-in">
             <h1 className="text-4xl sm:text-5xl font-bold text-text-primary mb-4 font-[family-name:var(--font-family-heading)]">
-              About <span className="gradient-text">Face Kinship</span>
+              About <span className="gradient-text">kinVision</span>
             </h1>
             <p className="text-text-secondary text-lg max-w-2xl mx-auto leading-relaxed">
               An AI-powered facial kinship verification system that uses deep learning
